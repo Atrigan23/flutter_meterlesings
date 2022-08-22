@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
-import 'image.dart';
-import './pages/home_page.dart';
-import './pages/info_page.dart';
-import './pages/insert_page.dart';
-import './pages/view_page.dart';
+import './Constructs/TextFields.dart';
+import './Constructs/Camera.dart';
+import 'Meterlesings/Datagrid.dart';
+import 'Meterlesings/html.dart';
+import 'DataGrid/DatagridSource.dart';
 
-
-
-void main() => runApp(const MyApp());
+void main() async {
+  
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
+      title: 'NWK Intyds Tel',
       
+      routes: {
+        './Constructs/TextFields': (context) => TextForm(),
+      
+      },
       home: HOME(),
+       
+     
     );
      
   }
@@ -27,67 +33,122 @@ class HOME extends StatefulWidget {
   const HOME({Key? key}) : super(key: key);
 
   @override
-  State<HOME> createState() => NAV_home();
+  State<HOME> createState() => App();
 
 
 }
 
-class NAV_home extends State<HOME> {
-  
-  int currentIndex = 0; 
-   int currentPageIndex = 0;
+class App extends State<HOME> {
+  get myFocusNode => null;
+    int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static  final List<Widget> _widgetOptions = <Widget>[
+    
+    ImagePage(),
+    TextForm(),
+    DataGrid(),
+    GetUsers()
+    
+    
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   
-
-  @override
-  Widget build(BuildContext context) {
+   @override
+Widget build(BuildContext context) {
+    // Scaffold is a layout for
+    // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        title: (Text('Hi')),
-      
-     
-        
-      ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.home_max_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.camera_alt_rounded ),
-            icon: Icon(Icons.camera_alt_rounded),
-            label: 'Insert',
+        backgroundColor: Colors.purple,
+        leading: const IconButton(
+          icon: Icon(Icons.menu),
+          tooltip: 'Navigation menu',
+          onPressed: null,
+        ),
+        title: const Text('Meterlesings'),
+        actions: const [
+          IconButton(
+            icon: Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: null,
           ),
         ],
       ),
-      body: <Widget>[
-        Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: const Text('Page 1'),
-        ),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
-        Container(
-          color: Colors.blue,
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
-        ),
-      ][currentPageIndex],
-      
+        body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(backgroundColor: Colors.purple,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_a_photo),
+            label: 'Home',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_rounded),
+            label: 'Business',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'School',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.data_array_outlined),
+            label: 'Data',
+            backgroundColor: Colors.purple,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
     );
-  }
+
+
+      // body is the majority of the screen       
+
 }
+}
+
+
+
+
+// class Button extends StatelessWidget{
+//   @override
+//   Widget build(BuildContext context) {
+ 
+  
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Floating Action Button Label'),
+//       ),
+//       body: const Center(
+//         child: Text('Press the button with a label below!'),
+//       ),
+//       floatingActionButton: FloatingActionButton.extended(
+//         onPressed: () {
+//           // Add your onPressed code here!
+//         },
+//         label: const Text('Approve'),
+//         icon: const Icon(Icons.thumb_up),
+//         backgroundColor: Colors.pink,
+//       ),
+//     );
+//   }
+  
+
+
+
+// }
 
 
 

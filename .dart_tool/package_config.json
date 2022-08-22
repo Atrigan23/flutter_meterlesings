@@ -20,6 +20,36 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "camera",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/camera-0.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "camera_android",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/camera_android-0.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "camera_avfoundation",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/camera_avfoundation-0.9.8+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "camera_platform_interface",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/camera_platform_interface-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "camera_web",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/camera_web-0.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.0",
       "packageUri": "lib/",
@@ -114,6 +144,12 @@
       "rootUri": "file:///C:/Users/Johan/Documents/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "get_it",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-7.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "http",
@@ -266,6 +302,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "quiver",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/Users/Johan/Documents/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -290,8 +332,26 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "stream_transform",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "string_scanner",
       "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "syncfusion_flutter_core",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-20.2.39",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "syncfusion_flutter_datagrid",
+      "rootUri": "file:///C:/Users/Johan/Documents/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_datagrid-20.2.39",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -344,7 +404,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-07-12T12:26:16.949910Z",
+  "generated": "2022-07-19T12:19:29.185785Z",
   "generator": "pub",
-  "generatorVersion": "2.17.5"
+  "generatorVersion": "2.17.6"
 }
