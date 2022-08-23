@@ -4,9 +4,11 @@ import './Constructs/Camera.dart';
 import 'Meterlesings/Datagrid.dart';
 import 'Meterlesings/html.dart';
 import 'DataGrid/DatagridSource.dart';
+import './Meterlesings/Service_locator.dart';
+
 
 void main() async {
-  
+    setupServiceLocator();
   runApp(new MyApp());
 }
 
@@ -118,7 +120,6 @@ Widget build(BuildContext context) {
 
 }
 }
-
 
 
 
