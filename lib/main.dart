@@ -70,7 +70,7 @@ Widget build(BuildContext context) {
     // the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.green,
         leading: const IconButton(
           icon: Icon(Icons.menu),
           tooltip: 'Navigation menu',
@@ -88,12 +88,16 @@ Widget build(BuildContext context) {
         body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(backgroundColor: Colors.purple,
+      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_a_photo),
+            icon: Icon(Icons.add_a_photo,),
+            
             label: 'Home',
-            backgroundColor: Colors.red,
+            
+            // Color:Colors.white,
+            
+            backgroundColor: Colors.orange,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_rounded),
@@ -105,11 +109,7 @@ Widget build(BuildContext context) {
             label: 'School',
             backgroundColor: Colors.purple,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.data_array_outlined),
-            label: 'Data',
-            backgroundColor: Colors.purple,
-          ),
+     
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

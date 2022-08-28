@@ -27,39 +27,61 @@ class TextForm extends StatefulWidget{
 
 
 class FormScreen extends State<TextForm>{
-
-	final  m_Id=new TextEditingController();
-	final  takkode=new TextEditingController();
-	final  straat_adres=new TextEditingController();
-  final  maand=new TextEditingController();
-  final  datum_ingelees=new TextEditingController();
-  final  personeel_nom=new TextEditingController();
-  final  aktief=new TextEditingController();
-  final  Image=new TextEditingController();
+  String? locateionImg;
+	TextEditingController  takkode=new TextEditingController();
+	TextEditingController  straat_adres=new TextEditingController();
+  TextEditingController  maand=new TextEditingController();
+  
+  TextEditingController  personeel_nom=new TextEditingController();
+  String dropdownValue = 'Jan';
+ 
+  TextEditingController  Image=new TextEditingController();
   
   
    
      
   
- Future<List<Users>> postData() async {
-   
-  final response = await http
-      .post(Uri.parse('https://online.nwk.co.za/Systems/Meterlesings/API.php?function=Addmeterlesings'),
-
-      body:{ "m_Id": m_Id.toString(),
-	    "takkode": takkode.toString(),
-	    "straat_adres":straat_adres.toString(),
-      "maand":maand.toString(),
-      "datum_ingelees":datum_ingelees.toString(),
-      "personeel_nom":personeel_nom.toString(),
-      "aktief":aktief.toString(),
-	  
-}
-
-	   
+ Future postData() async {
+  
+   print("takkode ${takkode.text}");	  
+   print("straat_adres ${straat_adres.text}");	  
+   print("maand $dropdownValue");	  
+   print("personeel_nom ${personeel_nom.text}");	  
+  var postUri = Uri.parse("https://online.nwk.co.za/Systems/Meterlesings/API.php");
+  http.MultipartRequest request = new http.MultipartRequest("POST", postUri);
+  request.fields['function'] = 'Addmeterlesings';
+  request.fields['takkode'] =  takkode.text;
+  request.fields['straat_adres'] =  straat_adres.text;
+  request.fields['maand'] =  maand.text;
+  request.fields['personeel_nom'] =  personeel_nom.text;
+  String  filePath =locateionImg! ;
+  http.MultipartFile multipartFile = await http.MultipartFile.fromPath(
+    'package',
+    filePath,
+    // filename: 'test.jpg',
+    // contentType: MediaType('image', 'jpeg'),  
+  );
+//   final response = await http
+//       .post(Uri.parse('https://online.nwk.co.za/Systems/Meterlesings/API.php?function=Addmeterlesings'),
+//       body:{
+// 	    "takkode": takkode.text,
+// 	    "straat_adres":straat_adres.text,
+//       "maand":maand.text,
+//       "personeel_nom":personeel_nom.text,
+// }
+ request.files.add(multipartFile);
+    request.send().then((response) async {
+    var responseString = await response.stream.bytesToString();
+print("HTML_RESULT $responseString");
+      // print('Test ${response.stream.bytesToString()}');
+      if (response.statusCode == 200) 
+      {print("Uploaded!");
       
+      return true ;
+      }
+    });
       
-      );
+//       );
       //  final data = {'m_Id': m_Id,
       //   'takkode': takkode,
       //    'straat_adres' : straat_adres,
@@ -68,11 +90,9 @@ class FormScreen extends State<TextForm>{
       //    'personeel_nom' : personeel_nom,
       //    'aktief' : aktief,};
 
-        final data = json.decode(response.body);
-    return data.map<Users>(Users.fromJson).toList();
+    //     final data = json.decode(response.body);
+    // return data.map<Users>(Users.fromJson).toList();
 
-
-  
 }
 
 
@@ -86,34 +106,37 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 File? image;
     Future pickImage() async{
-        try{
+    try {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if( image == null ) return;
 
-      final ImageTemporary = File(image.path);
-      this.image = ImageTemporary;
-      
-  } on PlatformException catch (e){
-    print('Failed to pick Image $e');
-  }
+      if(image == null) return;
+
+      final imageTemp = File(image.path);
+      locateionImg = image.path.toString();
+
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
         }
 
     
    Future pickGallery() async{
 
-    try{
-  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if( image == null ) return;
+   try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    final ImageTemporary = File(image.path);
-    this.image = ImageTemporary;
-    }on
-     PlatformException catch (e){
-    print('Failed to pick Image $e');
-  }
+      if(image == null) return;
+      locateionImg = image.path.toString();
+      final imageTemp = File('$locateionImg');
+      // locateionImg = imageTemp.toString();
 
-  
-
+      print('perm $locateionImg');
+      
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
   }
 
 
@@ -189,27 +212,12 @@ return TextFormField(
    }
 );
 }
-Widget _buildAktief(){
 
-return TextFormField(
-  controller:aktief,
-  decoration: InputDecoration(labelText: 'Aktief/Onaktief'),
-  validator: (  aktief){
-    if(aktief == null || aktief.isEmpty){
-      return 'State is required';
-    }
-  },
-   onSaved: ( aktief){
-  
-  aktief == aktief;
-
-   }
-);
-}
 Widget _buildMonth(){
 
-  String dropdownValue = 'January';
+  // String dropdownValue = 'January';
 return DropdownButton<String>(
+  
   
       value: dropdownValue,
       icon: const Icon(Icons.arrow_downward),
@@ -222,9 +230,10 @@ return DropdownButton<String>(
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          print('yo $dropdownValue');
         });
       },
-      items: <String>['January', 'Febuary', 'March', 'April','May','June','July','August','September','October','November','December']
+      items: <String>['Jan', 'Feb', 'Mar', 'April','May','June','July','August','September','October','November','December']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -232,6 +241,7 @@ return DropdownButton<String>(
         );
       }).toList(),
     );
+
 }
 
 
@@ -248,49 +258,33 @@ return DropdownButton<String>(
             child: Column( mainAxisAlignment: MainAxisAlignment.center,
             children:<Widget>[
             Text(
-              '${date.year}/${date.month}/${date.day}',
+              '',
                 style: TextStyle(fontSize: 32)),
-                const SizedBox(height: 16),ElevatedButton(child: Text('Select Date'),
-                onPressed: () async {DateTime? newDate = await
-              showDatePicker(context: context,
-              initialDate: date,
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2100)
-              );
-
-
-
-              if(newDate == null)
-              return;
-
-              setState(() => date = newDate);
-
-
-  }
-  ),
+                const SizedBox(height: 16),
+           
   Row(children: [
     Spacer(),
     const SizedBox(height: 24),
     FlatButton(  
                         child: Text('Image Picker'),  
-                        color: Colors.purple,
+                        color: Colors.green,
                          
                         onPressed: () => pickImage(),  ),
                         const SizedBox(height: 24),
     FlatButton(  
                         child: Text('Gallery Picker'),  
-                        color: Colors.purple,  
+                        color: Colors.green,  
                         onPressed: () => pickGallery(),  )
 
   ]),         _buildTakkode(),
              _buildstraatAdres(),
              _buildMonth(),
              _buildpersoneelNom(),
-             _buildAktief(),
+             
             SizedBox(height: 100,),
 
              RaisedButton(child: Text('Submit'),color:Colors.blue, onPressed: ()=>{
-              postData(),
+              
 
 
                 if(_formKey.currentState!.validate()){
@@ -305,7 +299,7 @@ return DropdownButton<String>(
 
              },)
            ,
-
+            
           ] )),
         ),
 

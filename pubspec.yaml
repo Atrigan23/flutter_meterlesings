@@ -44,6 +44,7 @@ dependencies:
   path: ^1.8.1
   get_it: ^7.2.0
   syncfusion_flutter_datagrid: ^20.2.39
+  dropdown_search: ^5.0.2
 
 dev_dependencies:
   flutter_test:

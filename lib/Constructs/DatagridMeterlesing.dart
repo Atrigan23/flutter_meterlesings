@@ -10,6 +10,8 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:flutter/material.dart';
 import 'TextFields.dart';
 
+
+var image= '';
 class FirstRoute extends StatelessWidget {
   const FirstRoute({super.key});
 
@@ -42,12 +44,26 @@ class SecondRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second Route'),
+          flexibleSpace: Container(
+      decoration: 
+      BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage('https://online.nwk.co.za/Systems/Meterlesings/photos/$image'),
+          fit: BoxFit.cover,
+        ),
       ),
-      body: Row(children: [
+  ),
+      ),
       
-
-        
-      ]),
+      body: new Container(
+        decoration: 
+      BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage('https://online.nwk.co.za/Systems/Meterlesings/photos/$image'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      ),
     );
   }
 }
@@ -83,6 +99,7 @@ static Future<List<Users>> GetUsers() async {
       .get(Uri.parse('https://online.nwk.co.za/Systems/Meterlesings/API.php?function=Getmeterlesings'));
         
   final data = json.decode(response.body);
+  print('datameer $data');
   return data.map<Users>(Users.fromJson).toList();
 
 
@@ -117,16 +134,24 @@ Widget build(BuildContext context) =>Scaffold (
 
 Widget buildUsers(List<Users> users) => ListView.builder(
   itemCount: users.length,
+  
   itemBuilder: (context,index){
     final user= users[index];
-
+    image =user.Image;
     return SingleChildScrollView(child: Card( 
-      child: ListTile( onTap: () {
+      
+      child:
+       ListTile( 
+        leading: CircleAvatar(
+          backgroundImage:  NetworkImage('https://online.nwk.co.za/Systems/Meterlesings/photos/${user.Image}'), // no matter how big it is, it won't overflow
+        ),
+        onTap: () {
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => SecondRoute()),
   );
 },
+
        title: Text(user.datum_ingelees),
       subtitle: Text(user.personeel_nom),
       ),
