@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_meterlesings/main.dart';
 import 'Camera.dart';
@@ -7,6 +7,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'DatagridMeterlesing.dart';
 
 class TextForm extends StatefulWidget{ 
 
@@ -16,19 +19,68 @@ class TextForm extends StatefulWidget{
   }
   
 
+
 }
 
 
 
+
+
 class FormScreen extends State<TextForm>{
+
+	final  m_Id=new TextEditingController();
+	final  takkode=new TextEditingController();
+	final  straat_adres=new TextEditingController();
+  final  maand=new TextEditingController();
+  final  datum_ingelees=new TextEditingController();
+  final  personeel_nom=new TextEditingController();
+  final  aktief=new TextEditingController();
+  final  Image=new TextEditingController();
+  
+  
+   
+     
+  
+ Future<List<Users>> postData() async {
+   
+  final response = await http
+      .post(Uri.parse('https://online.nwk.co.za/Systems/Meterlesings/API.php?function=Addmeterlesings'),
+
+      body:{ "m_Id": m_Id.toString(),
+	    "takkode": takkode.toString(),
+	    "straat_adres":straat_adres.toString(),
+      "maand":maand.toString(),
+      "datum_ingelees":datum_ingelees.toString(),
+      "personeel_nom":personeel_nom.toString(),
+      "aktief":aktief.toString(),
+	  
+}
+
+	   
+      
+      
+      );
+      //  final data = {'m_Id': m_Id,
+      //   'takkode': takkode,
+      //    'straat_adres' : straat_adres,
+      //    'maand' : maand,
+      //    'datum_ingelees' : datum_ingelees,
+      //    'personeel_nom' : personeel_nom,
+      //    'aktief' : aktief,};
+
+        final data = json.decode(response.body);
+    return data.map<Users>(Users.fromJson).toList();
+
+
+  
+}
+
+
+
+
+
   DateTime  date = DateTime(2022,12,24);
 
-String _takkode = '';
-String _straat_adres = '';
-String _maand = '';
-String _datum_ingelees = '';
-String _personeel_nom = '';
-String _aktief = '';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -63,11 +115,14 @@ File? image;
   
 
   }
+
+
   
 
 Widget _buildTakkode(){
 
 return TextFormField(
+  controller:takkode,
   decoration: InputDecoration(labelText: 'takkode'),
   validator: (  value){
     if(value == null || value.isEmpty){
@@ -76,7 +131,7 @@ return TextFormField(
   },
    onSaved: ( value){
   
-  _takkode == value;
+  takkode == value;
 
    }
 );
@@ -85,6 +140,7 @@ return TextFormField(
 Widget _buildstraatAdres(){
 
 return TextFormField(
+  controller:straat_adres,
   decoration: InputDecoration(labelText: 'Straat Adres'),
   validator: (  value){
     if(value == null || value.isEmpty){
@@ -93,7 +149,7 @@ return TextFormField(
   },
    onSaved: ( value){
   
-  _straat_adres == value;
+  straat_adres == value;
 
    }
 );
@@ -101,6 +157,7 @@ return TextFormField(
 Widget _buildmaand(){
 
 return TextFormField(
+  controller:maand,
   decoration: InputDecoration(labelText: 'Maand'),
   validator: (  value){
     if(value == null || value.isEmpty){
@@ -109,7 +166,7 @@ return TextFormField(
   },
    onSaved: ( value){
   
-  _maand == value;
+  maand == value;
 
    }
 );
@@ -118,6 +175,7 @@ return TextFormField(
 Widget _buildpersoneelNom(){
 
 return TextFormField(
+  controller:personeel_nom,
   decoration: InputDecoration(labelText: 'Personeel Nommer'),
   validator: (  value){
     if(value == null || value.isEmpty){
@@ -126,7 +184,7 @@ return TextFormField(
   },
    onSaved: ( value){
   
-  _personeel_nom == value;
+  personeel_nom == value;
 
    }
 );
@@ -134,18 +192,46 @@ return TextFormField(
 Widget _buildAktief(){
 
 return TextFormField(
+  controller:aktief,
   decoration: InputDecoration(labelText: 'Aktief/Onaktief'),
-  validator: (  value){
-    if(value == null || value.isEmpty){
+  validator: (  aktief){
+    if(aktief == null || aktief.isEmpty){
       return 'State is required';
     }
   },
-   onSaved: ( value){
+   onSaved: ( aktief){
   
-  _aktief == value;
+  aktief == aktief;
 
    }
 );
+}
+Widget _buildMonth(){
+
+  String dropdownValue = 'January';
+return DropdownButton<String>(
+  
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
+      items: <String>['January', 'Febuary', 'March', 'April','May','June','July','August','September','October','November','December']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
 }
 
 
@@ -156,7 +242,7 @@ return TextFormField(
   Widget build(BuildContext context) {
     return Scaffold(
 
-        body: Container(
+        body: SingleChildScrollView( child: Container(
           child: Form(
             key: _formKey,
             child: Column( mainAxisAlignment: MainAxisAlignment.center,
@@ -171,6 +257,8 @@ return TextFormField(
               firstDate: DateTime(1900),
               lastDate: DateTime(2100)
               );
+
+
 
               if(newDate == null)
               return;
@@ -194,33 +282,34 @@ return TextFormField(
                         color: Colors.purple,  
                         onPressed: () => pickGallery(),  )
 
-  ]),
-             _buildTakkode(),
+  ]),         _buildTakkode(),
              _buildstraatAdres(),
-             _buildmaand(),
+             _buildMonth(),
              _buildpersoneelNom(),
              _buildAktief(),
             SizedBox(height: 100,),
 
              RaisedButton(child: Text('Submit'),color:Colors.blue, onPressed: ()=>{
+              postData(),
 
 
                 if(_formKey.currentState!.validate()){
 
-                  
+                  postData(),
                 },
 
                 
-              _formKey.currentState!.save()
+              _formKey.currentState!.save(),
 
 
 
-             },),
+             },)
+           ,
 
           ] )),
         ),
 
-    );
+    ));
 
 
 

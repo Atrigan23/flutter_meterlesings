@@ -5,10 +5,11 @@ import 'Meterlesings/Datagrid.dart';
 import 'Meterlesings/html.dart';
 import 'DataGrid/DatagridSource.dart';
 import './Meterlesings/Service_locator.dart';
+import 'Constructs/DatagridMeterlesing.dart';
 
 
 void main() async {
-    setupServiceLocator();
+    // setupServiceLocator();
   runApp(new MyApp());
 }
 
@@ -47,10 +48,11 @@ class App extends State<HOME> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static  final List<Widget> _widgetOptions = <Widget>[
     
-    ImagePage(),
+    CameraApp(),
     TextForm(),
-    DataGrid(),
-    GetUsers()
+    MeterListLpage(),
+    // DataGrid(),
+   
     
     
   ];

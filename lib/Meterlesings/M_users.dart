@@ -62,15 +62,15 @@ import 'html.dart';
 
 
 
-//      factory Meter.fromJson(Map<String, dynamic> json) {
-//     return Meter(
-//         m_Id: int.parse(json['m_Id']),
-//         takkode: json['takkode'] as String,
-//         straat_adres: json['straat_adres'] as String,
-//         maand: json['maand'] as String,
-//         datum_ingelees: json['datum_ingelees'] as String,
-//         personeel_nom: json['personeel_nom'] as String,
-//         aktief: json['aktief'] as String,
+    //  factory Meter.fromJson(Map<String, dynamic> json) {
+    // return Meter(
+    //     m_Id: int.parse(json['m_Id']),
+    //     takkode: json['takkode'] as String,
+    //     straat_adres: json['straat_adres'] as String,
+    //     maand: json['maand'] as String,
+    //     datum_ingelees: json['datum_ingelees'] as String,
+    //     personeel_nom: json['personeel_nom'] as String,
+    //     aktief: json['aktief'] as String,
         
         
         

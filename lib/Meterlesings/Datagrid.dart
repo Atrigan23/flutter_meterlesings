@@ -1,98 +1,104 @@
-import 'dart:developer';
+// import 'dart:developer';
 
-import 'package:get_it/get_it.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart'; 
-import 'M_users.dart';
-import 'Meterlesings.dart';
-import 'html.dart';
-  final sl = GetIt.instance;
+// import 'package:get_it/get_it.dart';
+// import 'package:flutter/material.dart';
+// import 'package:syncfusion_flutter_datagrid/datagrid.dart'; 
+// import 'M_users.dart';
+// import 'Meterlesings.dart';
+// import 'html.dart';
+//   final sl = GetIt.instance;
   
-void main() {runApp(DataGrid());}  
-void setup() {
+// void main() {runApp(DataGrid());}  
+// void setup() {
 
 
-// Alternatively you could write it if you don't like global variables
-  GetIt.I.registerSingleton<UsersHtml>(UsersHtml());
-}
+// // Alternatively you could write it if you don't like global variables
+//   GetIt.I.registerSingleton<UsersHtml>(UsersHtml());
+// }
 
-class DataGrid extends StatefulWidget {  
-  @override  
-  _DataTableExample createState() => _DataTableExample();  
-}  
+// class DataGrid extends StatefulWidget {  
+//   @override  
+//   _DataTableExample createState() => _DataTableExample();  
+// }  
   
-class _DataTableExample extends State<DataGrid> { 
-  late List<Meterlesings> meterlesings; 
-  @override  
+// class _DataTableExample extends State<DataGrid> { 
+//   late List<Meterlesings> meterlesings; 
+//   @override  
 
-  void initState(){
-    super.initState();
+//   void initState(){
+//     super.initState();
 
-    this.meterlesings = List.of(allUsers);
-  }
+//     this.meterlesings = List.of(allUsers);
+//   }
 
-  Widget buildDataTable()
-  {
-     var pels ;
+//   Future<Object> buildDataTable() async
+//   {
+//      var meter ;
 
-    final columns =['ID','Takkode','Straat Adres','Maand','Datum ingelees','Personeel Nommer ', 'Aktief'];
-    print('future');
-    sl
-    .get<UsersHtml>()
-    .fetchUser2()
-    .then((value)
-    {
-      pels =value.split('/');
+//     final columns =['ID','Takkode','Straat Adres','Maand','Datum ingelees','Personeel Nommer ', 'Aktief'];
+    
+//     sl
+//     .get<UsersHtml>()
+//     .fetchUser2()
+//     .then((value)
+//     {
+//       meter =value.split('/');
 
-      print('future2 ${pels[0]}');
+//       print('future2 ${meter[2]}');
+//       print('future3 ${meter[3]}');
 
-    });
-    print('future3 ${pels}');
-    List<DataColumn>getColumns(List<String> columns ) =>
-    columns.map((String column) => DataColumn(
-    label: Text(column)
+   
 
-   )).toList();
+//     });
+    
+//     List<DataColumn>getColumns(List<String> columns ) =>
+//     columns.map((String column) => DataColumn(
+//     label: Text(column)
 
-   List<DataCell> getCells(List<dynamic> cells )=> 
-    cells.map((data)=> DataCell(Text('$data'))).toList();
-    List<DataRow> getRows(List<Meterlesings> meterlesings) =>  meterlesings.map((Meterlesings UserMeterlesing){
-    print('bro ${UserMeterlesing.takkode}');
-    print('bro  ${pels[0]}');
+//    )).toList();
 
+//     List<DataCell> getCells(List<dynamic> cells )=> 
+//     cells.map((data)=> DataCell(Text('$data'))).toList();
+//     List<DataRow> getRows(List<Meterlesings> meterlesings) =>   meterlesings.map((Meterlesings UserMeterlesing){
+   
+//     print('bro ${UserMeterlesing.takkode}');
+//     print('bro  ${meter[0]}');
+    
 
-    final cells =[
-    pels[0],  
-    pels[1],
-    pels[2],
-    pels[3],
-    pels[4],
-    pels[5],
-    pels[6],
-    ];
+//     final cells =[
+//     meter[0],  
+//     meter[1],
+//     meter[2],
+//     meter[3],
+//     meter[4],
+//     meter[5],
+//     meter[6],
+//     ];
 
  
+//  print('bro ${UserMeterlesing.takkode}');
+//     print('bro  ${meter[0]}');
 
-
-    return DataRow(cells: getCells(cells) );
-    }).toList();
+//     return DataRow(cells: getCells(cells) );
+//     }).toList();
     
 
-    return DataTable(
-    columns: getColumns(columns),
-    rows: getRows(meterlesings),
-    );
+//     return DataTable(
+//     columns: getColumns(columns),
+//     rows: getRows(meterlesings),
+//     );
     
-  }
+//   }
 
-   @override
-  Widget build(BuildContext context) => Scaffold(  
+//    @override
+//   Widget build(BuildContext context) => Scaffold(  
 
-    body: SingleChildScrollView( scrollDirection: Axis.horizontal, child: buildDataTable()),
+//       body: SingleChildScrollView( scrollDirection: Axis.horizontal),
 
-    
+//   );
+       
+//   }
 
 
-  );  
-}
+
 
